@@ -1,0 +1,40 @@
+h2 {
+    text-align: center;
+}
+
+.cities-btn-container {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    .cities-add-button {
+        width: 60px;
+        height: 60px;
+        border: none;
+        border-radius: 30px;
+        font-size: 30px;
+        text-align: center;
+        background: white;
+        border: 1px solid black;
+        &:focus {
+            outline: none;
+        }
+    }
+    span {
+        padding-left: 10px;
+    }
+    &:hover {
+        cursor: pointer;
+        button {
+            background: rgb(0, 128, 255);
+            color: white;
+            border: 1px solid white;
+        }
+        span {
+            color: rgb(0, 128, 255);
+        }
+    }
+}
+
+.cities-map-container {
+    height: 600px;
+}
