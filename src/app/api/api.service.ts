@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { City } from '../model/city.model';
 import { Observable } from 'rxjs/Observable';
-import { Http } from '@angular/http';
+import { Http, RequestOptionsArgs, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
+
+class Options implements RequestOptionsArgs {
+  public headers;
+}
 
 @Injectable()
 export class ApiService {
@@ -28,21 +32,21 @@ export class ApiService {
       });
   }
 
-  public createCity(newCity: City): void {
-    this.http.post(ApiService.API_URL, JSON.stringify(newCity))
-    .subscribe( response => console.log(response));
+  public createCity(newCity: City): Observable<any> {
+    const newOptions: Options = new Options;
+    newOptions.headers = new Headers();
+    newOptions.headers.append('Content-Type', 'application/json');
+    return this.http.post(ApiService.API_URL, JSON.stringify(newCity), newOptions);
   }
 
-  public updateCity(city: City): void {
+  public updateCity(city: City): Observable<any> {
     const updateCityUrl = ApiService.API_URL + '/' + city.id;
-    this.http.put(updateCityUrl, JSON.stringify(city))
-    .subscribe(response => console.log(response));
+    return this.http.put(updateCityUrl, JSON.stringify(city));
   }
 
-  public removeCity(cityId: number): void {
+  public removeCity(cityId: number): Observable<any> {
     const removeCityUrl = ApiService.API_URL + '/' + cityId;
-    this.http.delete(removeCityUrl)
-    .subscribe(response => console.log(response));
+    return this.http.delete(removeCityUrl);
   }
 
   private convertDataToCities(jsonCities: Array<Object>): Array<City> {

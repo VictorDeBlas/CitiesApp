@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from './api/api.service';
 import { City } from './model/city.model';
 import { Marker } from './model/marker';
-import { DialogService } from 'ng2-bootstrap-modal';
-import { CityDetialComponent, CityDetailDialogParameters } from './city-detail/city-detial.component';
+import { CityDetailComponent } from './city-detail/city-detail.component';
 
 @Component({
   selector: 'app-root',
@@ -12,40 +11,42 @@ import { CityDetialComponent, CityDetailDialogParameters } from './city-detail/c
   providers: [ApiService]
 })
 export class AppComponent implements OnInit {
-  title = 'app';
 
   // google maps zoom level
   public zoom: number = 4;
-  
   // initial center position for the map
   public lat: number = 40.416775
   public lng: number = -3.703790;
 
+  public selectedCity: City;
   public cityList: Array<City> = [];
   public markers: Array<Marker> = [];
+  public showDialog = false;
+  public isCreation = false;
 
-  constructor(protected apiService: ApiService, private dialogService: DialogService) {}
+  constructor(protected apiService: ApiService) {}
 
   public ngOnInit() {
     this.getCities();
   }
 
   public addCity(): void {
-    console.log('add city');
-    let params: CityDetailDialogParameters;
-    this.dialogService.addDialog(CityDetialComponent, params);
+    this.isCreation = true;
+    this.showDialog = true;
   }
 
   public openCityInfo(selectedMarker: Marker): void {
+    this.isCreation = false;
     this.apiService.showCity(selectedMarker.id)
       .subscribe( city => this.openCityDialog(city));
   }
 
   private openCityDialog(city: City): void {
-    this.dialogService.addDialog(CityDetialComponent, { city: city});
+    this.selectedCity = city;
+    this.showDialog = true;
   }
 
-  private getCities(): void {
+  public getCities(): void {
     this.apiService.getList()
       .subscribe( cityList => {
         this.cityList = cityList;

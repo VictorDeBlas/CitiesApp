@@ -1,0 +1,37 @@
+<div class="cities-modal" [ngClass]="{'active-dialog': activateDialog}">
+  <div class="cities-modal-header">
+    <span *ngIf="isCreation" class="modal-title">Creating a city...</span>
+    <span *ngIf="hasCityInfo" class="modal-title">{{city.title}}</span>
+    <button class="close-button" (click)="closeDialog()">X</button>
+  </div>
+  <div class="cities-modal-body">
+    <div *ngIf="isCreation" class="title-modify-container">
+      <span>City name: </span>
+      <input *ngIf="modify" [(ngModel)]="city.title">
+    </div>
+    <span *ngIf="hasCityInfo && !modify">{{city.content}}</span>
+    <div class="content-modify-container">
+        <span>Content: </span>
+        <textarea class="city-content-modify" *ngIf="modify" [(ngModel)]="city.content"></textarea>
+    </div>
+    <img *ngIf="hasCityInfo && !modify" [src]="city.image_url"/>
+    <div *ngIf="modify" class="image-url-modify-container">
+      <span>Image url: </span>
+      <input [(ngModel)]="city.image_url">
+    </div>
+    <div *ngIf="modify" class="lat-modify-container">
+      <span>Latitude: </span>
+      <input type="number" [(ngModel)]="city.lat">
+    </div>
+    <div *ngIf="modify" class="long-modify-container">
+      <span>Image url: </span>
+      <input type="number" [(ngModel)]="city.long">
+    </div>
+  </div>
+  <div class="cities-modal-footer">
+    <button class="delete-button" *ngIf="!isCreation" (click)="deleteCity()">Delete</button>
+    <button class="modify-button" *ngIf="!isCreation" [ngClass]="{'modify-active': modify}" (click)="modifyCity()">Modify</button>
+    <button class="update-button" *ngIf="!isCreation" (click)="updateCity()">Save</button>
+    <button class="create-button" *ngIf="isCreation" (click)="createCity()">Create</button>
+  </div>
+</div>

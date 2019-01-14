@@ -5,6 +5,7 @@ h2 {
 .cities-btn-container {
     margin-bottom: 10px;
     display: flex;
+    max-width: 150px;
     align-items: center;
     .cities-add-button {
         width: 60px;
@@ -35,6 +36,10 @@ h2 {
     }
 }
 
-.cities-map-container {
+.cities-map-modal-container {
+    position: relative;
     height: 600px;
+    .cities-map-container {
+        height: 100%;
+    }
 }

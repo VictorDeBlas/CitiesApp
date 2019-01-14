@@ -6,12 +6,12 @@ export class City {
     long: string;
     image_url: string;
 
-    constructor(data: any) {
-        this.id = data.id;
-        this.title = data.title;
-        this.content = data.content;
-        this.lat = data.lat;
-        this.long = data.long;
-        this.image_url = data.image_url;
+    constructor(data?: any) {
+        this.id = (data) ? data.id: undefined;
+        this.title = (data) ? data.title : undefined;
+        this.content = (data) ? data.content : undefined;
+        this.lat = (data) ? data.lat : undefined;
+        this.long = (data) ? data.long : undefined;
+        this.image_url = (data) ? data.image_url : undefined;
     }
 }
