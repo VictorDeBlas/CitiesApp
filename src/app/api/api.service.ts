@@ -33,15 +33,14 @@ export class ApiService {
   }
 
   public createCity(newCity: City): Observable<any> {
-    const newOptions: Options = new Options;
-    newOptions.headers = new Headers();
-    newOptions.headers.append('Content-Type', 'application/json');
-    return this.http.post(ApiService.API_URL, JSON.stringify(newCity), newOptions);
+    const requestOptions = this.createHeaders();
+    return this.http.post(ApiService.API_URL, JSON.stringify(newCity), requestOptions);
   }
 
   public updateCity(city: City): Observable<any> {
+    const requestOptions = this.createHeaders();
     const updateCityUrl = ApiService.API_URL + '/' + city.id;
-    return this.http.put(updateCityUrl, JSON.stringify(city));
+    return this.http.put(updateCityUrl, JSON.stringify(city), requestOptions);
   }
 
   public removeCity(cityId: number): Observable<any> {
@@ -53,6 +52,13 @@ export class ApiService {
     const citiesArray: Array<City> = [];
     jsonCities.forEach(jsonCity => citiesArray.push(new City(jsonCity)));
     return citiesArray;
+  }
+
+  private createHeaders(): Options {
+    const requestOptions: Options = new Options;
+    requestOptions.headers = new Headers();
+    requestOptions.headers.append('Content-Type', 'application/json');
+    return requestOptions;
   }
 
 }

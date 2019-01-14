@@ -1,22 +1,24 @@
 <div class="cities-modal" [ngClass]="{'active-dialog': activateDialog}">
   <div class="cities-modal-header">
     <span *ngIf="isCreation" class="modal-title">Creating a city...</span>
-    <span *ngIf="hasCityInfo" class="modal-title">{{city.title}}</span>
+    <span *ngIf="!isCreation" class="modal-title">{{city.title}}</span>
     <button class="close-button" (click)="closeDialog()">X</button>
   </div>
   <div class="cities-modal-body">
     <div *ngIf="isCreation" class="title-modify-container">
       <span>City name: </span>
-      <input *ngIf="modify" [(ngModel)]="city.title">
+      <input *ngIf="modify" [ngClass]="{'error': !city.title && titleError}" [(ngModel)]="city.title">
     </div>
-    <span *ngIf="hasCityInfo && !modify">{{city.content}}</span>
-    <div class="content-modify-container">
+    <span *ngIf="!modify">{{city.content}}</span>
+    <div *ngIf="modify" class="content-modify-container">
         <span>Content: </span>
-        <textarea class="city-content-modify" *ngIf="modify" [(ngModel)]="city.content"></textarea>
+        <textarea class="city-content-modify" [ngClass]="{'error': !city.content && contentError}" [(ngModel)]="city.content"></textarea>
     </div>
-    <img *ngIf="hasCityInfo && !modify" [src]="city.image_url"/>
+    <div *ngIf="!modify" class="image-container">
+      <img [src]="city.image_url"/>
+    </div>
     <div *ngIf="modify" class="image-url-modify-container">
-      <span>Image url: </span>
+      <span>Image URL: </span>
       <input [(ngModel)]="city.image_url">
     </div>
     <div *ngIf="modify" class="lat-modify-container">
@@ -24,7 +26,7 @@
       <input type="number" [(ngModel)]="city.lat">
     </div>
     <div *ngIf="modify" class="long-modify-container">
-      <span>Image url: </span>
+      <span>Longitude: </span>
       <input type="number" [(ngModel)]="city.long">
     </div>
   </div>

@@ -36,7 +36,7 @@
     </agm-circle>-->
 
   </agm-map>
-  <app-city-detail class="cities-detail" [city]="selectedCity" [isCreation]="isCreation"
+  <app-city-detail *ngIf="showDialog" class="cities-detail" [city]="selectedCity" [isCreation]="isCreation"
                   [(activateDialog)]="showDialog" 
                   (activateDialogOutput)="showDialog=false"
                   (forceUpdateListEmitter)="getCities()"></app-city-detail>

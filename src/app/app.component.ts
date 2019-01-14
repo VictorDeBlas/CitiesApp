@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   }
 
   public addCity(): void {
+    this.selectedCity = new City();
     this.isCreation = true;
     this.showDialog = true;
   }
@@ -55,6 +56,7 @@ export class AppComponent implements OnInit {
   }
 
   private updateMarkers(): void {
+    this.markers = [];
     this.cityList.forEach( city => {
       const marker: Marker = new Marker();
       marker.id = city.id;
